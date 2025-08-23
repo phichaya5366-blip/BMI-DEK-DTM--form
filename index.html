@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>แบบฟอร์ม BMI DEK DTM</title>
+  <meta name="description" content="เพื่อนๆ กรอกชื่อจริง ชื่อเล่น น้ำหนัก และส่วนสูง แล้วกด ‘คำนวณ & บันทึก’ ได้เลย ขอบคุณเพื่อนๆ ที่น่ารักนะคะ 💙">
+  <meta name="theme-color" content="#2563eb">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://phichaya5366-blip.github.io/BMI-DEK-DTM--form/BML.html">
+  <meta property="og:title" content="BMI DEK DTM">
+  <meta property="og:description" content="กรอกข้อมูลแล้วกด ‘คำนวณ & บันทึก’ ขอบคุณเพื่อนๆ ที่น่ารักนะคะ 💙">
+  <meta property="og:image" content="https://phichaya5366-blip.github.io/BMI-DEK-DTM--form/cover.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="หน้าปกแบบฟอร์มกรอก BMI ของห้อง">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="กรอก BMI ของห้องเรา">
+  <meta name="twitter:description" content="กรอกข้อมูลแล้วกด ‘คำนวณ & บันทึก’ ได้เลย">
+  <meta name="twitter:image" content="https://phichaya5366-blip.github.io/BMI-DEK-DTM--form/cover.png">
+
+  <style>
+    :root{
+      --bg:#f6f7fb; --card:#fff; --ink:#0f172a; --muted:#64748b;
+      --link:#2563eb; --ring:#93c5fd; --danger:#ef4444;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,"Noto Sans Thai",sans-serif;background:var(--bg);color:var(--ink)}
+    .container{max-width:1100px;margin:auto;padding:20px}
+    .card{background:var(--card);border-radius:14px;box-shadow:0 8px 24px rgba(2,6,23,.08);padding:16px;margin-bottom:16px}
+    h1{margin:0 0 8px;font-size:1.35rem}
+    h2{margin:0 0 10px;font-size:1.05rem}
+    p.lead{margin:0;color:var(--muted)}
+    /* Tabs */
+    .tabs{display:flex;gap:8px;margin-bottom:12px}
+    .tabbtn{border:1px solid #e5e7eb;background:#f8fafc;border-radius:10px;padding:9px 12px;font-weight:600;cursor:pointer}
+    .tabbtn.active{background:var(--link);color:#fff;border-color:transparent}
+    /* Notice */
+    .notice{display:flex;gap:12px;align-items:flex-start;background:#eef2ff;border:1px solid #dbeafe;border-radius:12px;padding:12px}
+    .notice b{display:block}
+    /* Form layout */
+    .grid{display:grid;gap:12px}
+    .grid-4{grid-template-columns:repeat(4,1fr)}
+    @media (max-width:900px){ .grid-4{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:600px){ .grid-4{grid-template-columns:1fr} }
+    label{font-size:.9rem;margin:4px 0;display:block}
+    .field{background:#fafafa;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;width:100%;outline:none}
+    .field:focus{border-color:var(--ring);box-shadow:0 0 0 4px rgba(147,197,253,.35)}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    button{border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
+    .primary{background:var(--link);color:#fff}
+    .ghost{background:#f1f5f9}
+    .danger{background:#fee2e2;color:#991b1b}
+    /* Tables */
+    .table-wrap{overflow:auto}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px;border-bottom:1px solid #eef2f7;text-align:left;white-space:nowrap}
+    th{background:#f8fafc}
+    .status{padding:2px 8px;border-radius:999px;font-size:.85rem;font-weight:700}
+    .low{background:#e0f2fe;color:#075985}
+    .ok{background:#dcfce7;color:#166534}
+    .over{background:#fef3c7;color:#92400e}
+    .ob1{background:#fde68a;color:#92400e}
+    .ob2{background:#fee2e2;color:#991b1b}
+    .tag{display:inline-block;padding:2px 8px;border-radius:999px;background:#eef2ff}
+    .oktag{background:#dcfce7;color:#166534}
+    .waittag{background:#fff7ed;color:#92400e}
+    .instant{margin-top:10px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="tabs">
+      <button class="tabbtn active" data-tab="formTab">หน้า 1: กรอก BMI</button>
+      <button class="tabbtn" data-tab="statusTab">หน้า 2: สถานะการส่ง</button>
+    </div>
+
+    <!-- TAB 1: ฟอร์มกรอก -->
+    <section id="formTab" class="card">
+      <h1>แบบฟอร์มคำนวณและบันทึกค่า BMI</h1>
+      <div class="notice" role="note" aria-label="คำเชิญชวน">
+        <div>📣</div>
+        <div>
+          <b>เพื่อนๆ กรอกข้อมูลแล้วกด “คำนวณ & บันทึก” ได้เลย</b>
+          <span class="lead">ขอบคุณเพื่อนๆ ที่น่ารักทุกคนที่ช่วยกรอกนะคะ 💙</span>
+        </div>
+      </div>
+      <p class="lead" style="margin-top:8px">เกณฑ์เอเชีย/ไทย: ต่ำกว่าเกณฑ์ &lt;18.5, ปกติ 18.5–22.9, ท้วม 23.0–24.9, อ้วนระดับ 1 (25.0–29.9), อ้วนระดับ 2 (≥30.0)</p>
+
+      <form id="bmiForm" novalidate style="margin-top:12px">
+        <div class="grid grid-4">
+          <div>
+            <label for="fullname">ชื่อจริง</label>
+            <input id="fullname" class="field" type="text" placeholder="ชื่อ-สกุล" required>
+          </div>
+          <div>
+            <label for="nickname">ชื่อเล่น</label>
+            <input id="nickname" class="field" type="text" placeholder="ชื่อเล่น" required>
+          </div>
+          <div>
+            <label for="weight">น้ำหนัก (กก.)</label>
+            <input id="weight" class="field" type="number" min="0.1" step="0.1" placeholder="เช่น 60.5" required>
+          </div>
+          <div>
+            <label for="height">ส่วนสูง (ซม.)</label>
+            <input id="height" class="field" type="number" min="0.1" step="0.1" placeholder="เช่น 165.0" required>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="primary">คำนวณ & บันทึก</button>
+          <button type="button" id="resetBtn" class="ghost">ล้างฟอร์ม</button>
+          <button type="button" id="exportBtn" class="ghost">Export CSV</button>
+          <button type="button" id="clearAllBtn" class="danger">ลบข้อมูลทั้งหมด</button>
+        </div>
+
+        <div id="instant" class="instant"></div>
+      </form>
+    </section>
+
+    <!-- ตารางรายการที่ส่งแล้ว -->
+    <section class="card">
+      <h2>ตารางข้อมูลที่ส่งแล้ว</h2>
+      <div class="table-wrap">
+        <table id="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>เวลา</th>
+              <th>ชื่อจริง</th>
+              <th>ชื่อเล่น</th>
+              <th>น้ำหนัก (กก.)</th>
+              <th>ส่วนสูง (ซม.)</th>
+              <th>BMI</th>
+              <th>สถานะ</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="lead" style="margin-top:8px">* ใช้ “ชื่อจริง” เป็นตัวอัปเดตข้อมูล: ถ้าชื่อเดิมกรอกซ้ำ ระบบจะอัปเดตแถวเดิมอัตโนมัติ</p>
+    </section>
+
+    <!-- TAB 2: สถานะการส่ง -->
+    <section id="statusTab" class="card" style="display:none">
+      <h1>สถานะการส่งของสมาชิก</h1>
+      <p class="lead">หน้านี้แสดงว่าใคร “ส่งแล้ว/ยังไม่ส่ง” (เทียบกับรายชื่อชั้นเรียน)</p>
+      <div class="table-wrap" style="margin-top:10px">
+        <table id="rosterTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>ชื่อ</th>
+              <th>สถานะ</th>
+              <th>อัปเดตล่าสุด</th>
+              <th>ชื่อเล่น</th>
+              <th>BMI</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="lead" id="rosterSummary" style="margin-top:8px"></p>
+    </section>
+  </div>
+
+  <script>
+    const KEY = 'bmi_entries_v_noid';
+    const $ = id => document.getElementById(id);
+
+    // รายชื่อชั้นเรียน (ไม่มีรหัส)
+    const ROSTER = [
+      "กนกนาถ ปาทาน","ณัฐนิชา หิ้นฮั้น","พรพรหม ขวัญเมือง","พรไพริน สุกสัย",
+      "แพรภัส พงษ์ศิริกุล","ชื่นกมล ตระกุลนิตย์","ดลญธิดา อักษรประดิษฐ",
+      "พรธิดา นาเจริญ","โญฮานิส จงรักษ์","ธันย์ชนก พลสิทธิ์",
+      "นัสซิมา กิจจารักษ์","ปวีณ์กร สายทองอินทร์","ฟาเดียฮาล ขุนอินคีรี",
+      "ซีนีน อนุกูล","คฑาทิพย์ ชุมเปีย","จิรวัฒณ์ ปฏิสุวรรณ์",
+      "ฟิตรียา ด่อล๊ะ","มูฮำหมัดบัยฮากี สาและ","ลัคนา ปลอดอ่อน","ศิวกร รักษ์วงศ์",
+      "อัชรอน เห็มเอียด","ตัสนีม ดือราแม","นัสรีน เจ๊ะสัน","กัลยารัตน์ สอนสงคราม",
+      "ซิลมี่ย์ ยอดแก้ว","นูรุลฮูดา แวโซะ","กชกร แก้วนพคุณ","ริดด์วัน แมหะ",
+      "นุสรีต้า รักไทร","ปุญญพัฒน์ เดชฉิม","อุดมสิริ เทพลักษณ์","ขวัญมนัส ชูบัวแก้ว",
+      "ดวงกมล ราชครองเมือง","ตัสนิน สามามะ","นันทิกานต์ หมาดหนุด","นิศัลมี ปูเต๊ะ",
+      "ปัณณธร คุ้มรักษ์","พิชญา มูหะหมัด","วรรณษา ไชยโคตร์","สิริรัตน์ ปุนทะมุณี",
+      "เสาวลักษณ์ เวชยม","อธิชา ภาณุวัฒน์ภิญโญ","ฮันนาร์ หยีเหยง","เสฎฐวุฒิ จิตรวิรัตน์"
+    ];
+
+    const load = () => JSON.parse(localStorage.getItem(KEY) || '[]');
+    const save = rows => localStorage.setItem(KEY, JSON.stringify(rows));
+    const esc = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+
+    // เกณฑ์เอเชีย/ไทย
+    function classify(bmi){
+      if (bmi < 18.5) return {label:'ต่ำกว่าเกณฑ์', cls:'low'};
+      if (bmi < 23.0) return {label:'ปกติ', cls:'ok'};
+      if (bmi < 25.0) return {label:'ท้วม', cls:'over'};
+      if (bmi < 30.0) return {label:'อ้วนระดับ 1', cls:'ob1'};
+      return {label:'อ้วนระดับ 2', cls:'ob2'};
+    }
+
+    // Tabs
+    document.querySelectorAll('.tabbtn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active'); /* แก้บั๊ก: เอา btn.addEventListener; ออก */
+        const tgt = btn.dataset.tab;
+        ['formTab','statusTab'].forEach(id => $(id).style.display = (id===tgt?'block':'none'));
+        if (tgt==='statusTab') renderRoster();
+      });
+    });
+
+    // Form submit
+    $('bmiForm').addEventListener('submit', e=>{
+      e.preventDefault();
+      const fullname = $('fullname').value.trim();
+      const nickname = $('nickname').value.trim();
+      const w = parseFloat($('weight').value);
+      const hcm = parseFloat($('height').value);
+      if (!fullname || !nickname || !(w>0) || !(hcm>0)) return;
+
+      const h = hcm/100;
+      const bmi = w/(h*h);
+      const cat = classify(bmi);
+      $('instant').innerHTML = `ค่า BMI ของ <b>${esc(fullname)}</b> (${esc(nickname)}) = <b>${bmi.toFixed(2)}</b> — <span class="status ${cat.cls}">${cat.label}</span>`;
+
+      const rows = load();
+      const idx = rows.findIndex(r => r.fullname.trim() === fullname);
+      const rec = { ts: Date.now(), fullname, nickname, weight: w, height: hcm, bmi };
+      if (idx >= 0) rows[idx] = rec; else rows.push(rec);
+      save(rows);
+      renderSubmitted();
+      renderRoster();
+      e.target.reset();
+      $('fullname').focus();
+    });
+
+    $('resetBtn').addEventListener('click', ()=>{
+      $('bmiForm').reset();
+      $('instant').innerHTML = '';
+      $('fullname').focus();
+    });
+
+    $('clearAllBtn').addEventListener('click', ()=>{
+      if (!confirm('ยืนยันลบข้อมูลทั้งหมด?')) return;
+      localStorage.removeItem(KEY);
+      renderSubmitted();
+      renderRoster();
+      $('instant').innerHTML = '';
+    });
+
+    $('exportBtn').addEventListener('click', ()=>{
+      const rows = load();
+      const header = ['timestamp_iso','fullname','nickname','weight_kg','height_cm','bmi','category'];
+      const lines = [header.join(',')];
+      rows.forEach(r=>{
+        const cat = classify(r.bmi).label;
+        lines.push([
+          new Date(r.ts).toISOString(),
+          csvSafe(r.fullname),
+          csvSafe(r.nickname),
+          r.weight.toFixed(1),
+          r.height.toFixed(1),
+          r.bmi.toFixed(2),
+          csvSafe(cat)
+        ].join(','));
+      });
+      const blob = new Blob([lines.join('\n')], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'bmi_export.csv';
+      document.body.appendChild(a); a.click();
+      URL.revokeObjectURL(url); a.remove();
+    });
+    const csvSafe = s => `"${String(s).replace(/"/g,'""')}"`;
+
+    // Render tables
+    function renderSubmitted(){
+      const tb = document.querySelector('#table tbody');
+      const rows = load().slice().sort((a,b)=>a.fullname.localeCompare(b.fullname,'th'));
+      tb.innerHTML = '';
+      rows.forEach((r,i)=>{
+        const c = classify(r.bmi);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${i+1}</td>
+          <td>${new Date(r.ts).toLocaleString()}</td>
+          <td>${esc(r.fullname)}</td>
+          <td>${esc(r.nickname)}</td>
+          <td>${r.weight.toFixed(1)}</td>
+          <td>${r.height.toFixed(1)}</td>
+          <td>${r.bmi.toFixed(2)}</td>
+          <td><span class="status ${c.cls}">${c.label}</span></td>
+        `;
+        tb.appendChild(tr);
+      });
+    }
+
+    function renderRoster(){
+      const map = new Map(load().map(r => [r.fullname.trim(), r]));
+      const tb = document.querySelector('#rosterTable tbody');
+      tb.innerHTML = '';
+      let done = 0;
+      ROSTER.forEach((name, i)=>{
+        const rec = map.get(name);
+        const sent = !!rec;
+        if (sent) done++;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${i+1}</td>
+          <td>${esc(name)}</td>
+          <td>${sent ? '<span class="tag oktag">ส่งแล้ว</span>' : '<span class="tag waittag">ยังไม่ส่ง</span>'}</td>
+          <td>${sent ? esc(new Date(rec.ts).toLocaleString()) : '—'}</td>
+          <td>${sent ? esc(rec.nickname) : '—'}</td>
+          <td>${sent ? rec.bmi.toFixed(2) : '—'}</td>
+        `;
+        tb.appendChild(tr);
+      });
+      document.getElementById('rosterSummary').textContent =
+        `ส่งแล้ว ${done} คน • ยังไม่ส่ง ${ROSTER.length - done} คน • รวม ${ROSTER.length} คน`;
+    }
+
+    // Init
+    renderSubmitted();
+    renderRoster();
+  </script>
+</body>
+</html>
